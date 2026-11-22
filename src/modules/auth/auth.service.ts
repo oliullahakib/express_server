@@ -10,7 +10,7 @@ const user = await pool.query(`
     SELECT * FROM users WHERE email = $1
     
     `,[email])
-
+    
     if(user.rowCount === 0){
         throw new Error("User not exist")
     }
@@ -20,6 +20,9 @@ const user = await pool.query(`
         throw new Error("Invalid Credential!!")
     }
 
+    if(!user.rows[0].is_active){
+        throw new Error("User is Blocked")
+    }
     //create jwt access token
     const jwtPayload={
         id:user.rows[0].id,
