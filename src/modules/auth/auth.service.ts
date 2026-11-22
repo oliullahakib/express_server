@@ -27,6 +27,7 @@ const user = await pool.query(`
     const jwtPayload={
         id:user.rows[0].id,
         email:user.rows[0].email,
+        roll:user.rows[0].roll,
         name:user.rows[0].name
     }
     const accessToken = jwt.sign(jwtPayload,config.jwt_secret as string,{expiresIn:"1d"})
